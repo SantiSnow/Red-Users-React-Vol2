@@ -1,0 +1,7 @@
+.labelStar{
+    margin: 1rem;
+}
+
+input[type="radio"]{
+    display: none;
+}
