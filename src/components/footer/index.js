@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './footer.css';
 
 class Footer extends React.Component{
@@ -14,7 +15,10 @@ class Footer extends React.Component{
                         </p>
                     </div>
                     <div className="col-10 col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xl-5 d-flex justify-content-center">
-                        <a className='btn btn-secondary contact-button'>Contact</a>
+                        <Link 
+                            to="/contact" 
+                            className='btn btn-secondary contact-button'>Contact
+                        </Link>
                     </div>
                 </div>
             </div>

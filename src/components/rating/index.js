@@ -15,7 +15,37 @@ class Rating extends React.Component{
 
     sendCalification()
     {
+
+        const name = document.getElementById("name").value;
+        const enterprise = document.getElementById("enterprise").value;
+        
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "id": 5,
+                "name": name,
+                "stars": this.state.actualRating,
+                "company": {
+                    "name": enterprise
+                }
+            }),
+        };
+
         console.log("Sending...");
+
+        fetch("http://localhost:3000/comments", options)
+            .then((response) => response.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
 
     async cambiarRating(value)
@@ -32,7 +62,7 @@ class Rating extends React.Component{
                 <div className="card-body">
                     <h5 className="card-title">Califique nuestros servicios</h5>
 
-                    <form onSubmit={() => this.sendCalification()}>
+                    <div onSubmit={() => this.sendCalification()}>
 
                         <div className="row d-flex justify-content-center mt-5 mb-4">
                             {[ ...Array(5)].map((star, i)=>{
@@ -52,11 +82,20 @@ class Rating extends React.Component{
                         </div>
 
                         <div className='row ml-5 mr-5'>
-                            <label htmlFor="comment">Comentarios</label>
-                            <input type="text" name='comment' id='comment' className='form-control' />
+                            <label htmlFor="comment">Nombre</label>
+                            <input type="text" name='name' id='name' className='form-control' />
                         </div>
 
-                    </form>
+                        <div className='row ml-5 mr-5'>
+                            <label htmlFor="comment">Empresa</label>
+                            <input type="text" name='enterprise' id='enterprise' className='form-control' />
+                        </div>
+
+                        <div className='row ml-5 mr-5'>
+                            <button className='btn btn-primary mt-3' onClick={ () => this.sendCalification() }>Enviar comentario</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </>
