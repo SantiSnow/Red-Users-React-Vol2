@@ -5,3 +5,25 @@
 input[type="radio"]{
     display: none;
 }
+
+.validationError
+{
+    color: rgb(181, 0, 0);
+    font-weight: 600;
+}
+
+.suggestions{
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 48px;
+    border: 1px solid rgb(74, 74, 74);
+    border-radius: 0px 0px 5px 5px;
+    padding: 1rem 5rem;
+    margin-top: 1px;
+}
+
+.suggestions>ul{
+    padding: 0;
+    margin: 0;
+}

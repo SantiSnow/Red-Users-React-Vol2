@@ -17,7 +17,7 @@ class Comments extends React.Component{
       headers: {
           Accept: "application/json",
       },
-  })
+    })
       .then((response) => response.json())
       .then(
           async (result) => {

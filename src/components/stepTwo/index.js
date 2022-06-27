@@ -3,7 +3,7 @@ import Header from '../header';
 import Comments from '../comments';
 import Footer from '../footer';
 import Rating from '../rating';
-import './App.css';
+import './stepTwo.css';
 
 
 class StepTwo extends React.Component{
