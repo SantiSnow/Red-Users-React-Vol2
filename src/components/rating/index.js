@@ -12,6 +12,7 @@ class Rating extends React.Component{
             actualRating: 0,
             name: '',
             companyName: '',
+            email: '',
             validation: false,
             validationError: "",
             companies: [],
@@ -19,38 +20,17 @@ class Rating extends React.Component{
 
         this.updateStateName = this.updateStateName.bind(this);
         this.updateStateCompany = this.updateStateCompany.bind(this);
-
-        
-    }
-
-    async componentDidMount()
-    {
-        await this.getCompanies();
-    }
-
-    getCompanies = async () =>{
-        const options = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-
-        fetch("http://localhost:3000/companies", options)
-            .then((response) => response.json())
-            .then(
-                async (result) => {
-                    await this.setState({ companies: result });
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+        this.updateStateEmail = this.updateStateEmail.bind(this);
     }
 
     async updateStateName(event)
     {
         await this.setState({ name: event.target.value });
+    }
+
+    async updateStateEmail(event)
+    {
+        await this.setState({ email: event.target.value });
     }
 
     updateStateCompany(event)
@@ -84,6 +64,15 @@ class Rating extends React.Component{
             return false;
         }
 
+        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+        if(!re.test(this.state.email))
+        {
+            await this.setState({ validation: true });
+            this.setState({ validationError: "Por favor, ingrese una casilla de correo válida."});
+            return false;
+        }
+
         const options = {
             method: "POST",
             headers: {
@@ -106,8 +95,10 @@ class Rating extends React.Component{
                 (result) => {
                     this.props.navigate('/comments')
                 },
-                (error) => {
+                async (error) => {
                     console.log(error);
+                    await this.setState({ validation: true });
+                    this.setState({ validationError: "Parece que el servidor no se encuentra disponible. Intentelo más tarde."});
                 }
             );
     }
@@ -153,6 +144,16 @@ class Rating extends React.Component{
                                 maxLength={50}
                                 value={this.state.name} 
                                 onChange={this.updateStateName} />
+                        </div>
+
+                        <div className='row ml-5 mr-5'>
+                            <label htmlFor="comment">Email</label>
+                            <input type="text" 
+                                name='email' id='email' 
+                                className='form-control' 
+                                maxLength={25}
+                                value={this.state.email} 
+                                onChange={this.updateStateEmail} />
                         </div>
 
                         <div className='row ml-5 mr-5'>
